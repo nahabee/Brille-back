@@ -1,6 +1,7 @@
 import usersController from './controllers/users';
 import addressesController from './controllers/addresses';
 import productsController from './controllers/products';
+import ordersController from './controllers/orders';
 import statusController from './controllers/status';
 import colorsController from './controllers/colors';
 import pagesController from './controllers/pages';
@@ -103,7 +104,7 @@ const setupRoutes = (server: Express) => {
   //route POST
   server.post(
     '/api/products',
-    productsController.validateProduct,
+    // productsController.validateProduct,
     productsController.addProduct
   );
 
@@ -144,6 +145,13 @@ const setupRoutes = (server: Express) => {
     imagesController.updateImage
   );
 
+  // ? DELETE an image
+  server.delete(
+    '/api/images/:idImage',
+    imagesController.imageExists,
+    imagesController.deleteImage
+  );
+
   // >> --- PARAGRAPHS ---
   // ? GET all the paragraphs
   server.get('/api/paragraphs', paragraphsController.getAllParagraphs);
@@ -169,6 +177,13 @@ const setupRoutes = (server: Express) => {
     paragraphsController.updateParagraph
   );
 
+  // ? DELETE a paragraph
+  server.delete(
+    '/api/paragraphs/:idParagraph',
+    paragraphsController.paragraphExists,
+    paragraphsController.deleteParagraph
+  );
+
   // => ROUTES GET POUR STATUS <= //
   //GET ALL
   server.get('/api/status', statusController.getAllStatus);
@@ -178,6 +193,14 @@ const setupRoutes = (server: Express) => {
   server.post('/api/status', statusController.addStatus);
   // PUT status
   server.put('/api/status/:idStatus', statusController.updateStatus);
+
+  // => ROUTES GET POUR ORDERS <= //
+  //GET ALL
+  server.get('/api/orders', ordersController.getAllOrders);
+  //GET BY ID
+  server.get('/api/orders/:idOrder', ordersController.getOrderById);
+  //route POST
+  server.post('/api/orders', ordersController.addOrder);
 
   // NEWSLETTERS
   //route GET ALL

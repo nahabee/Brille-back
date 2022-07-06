@@ -13,6 +13,7 @@ const validateParagraph = (req: Request, res: Response, next: NextFunction) => {
   }
   const errors = Joi.object({
     idPage: Joi.number().presence(required),
+    title: Joi.string().max(255).presence(required),
     description: Joi.string().presence(required),
     id: Joi.number().optional(), // pour react-admin
   }).validate(req.body, { abortEarly: false }).error;
@@ -79,7 +80,7 @@ const addParagraph = async (
   }
 };
 
-// >> --- PUT A Paragraph (by ID) ---
+// >> --- PUT A PARAGRAPH (by ID) ---
 
 // ! 1st step : check if the paragraph exists
 const paragraphExists = (async (
@@ -131,6 +132,30 @@ const updateParagraph = async (
   }
 };
 
+// >> --- DELETE A PARAGRAPH (by ID) ---
+const deleteParagraph = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Récupèrer l'id du paragraph avec req.params
+    const { idParagraph } = req.params;
+    // Vérifie if paragraph exist
+    const paragraph = await Paragraph.getParagraphById(Number(idParagraph));
+    const paragraphDeleted = await Paragraph.deleteParagraph(
+      Number(idParagraph)
+    );
+    if (paragraphDeleted) {
+      res.status(200).send(paragraph); // react-admin needs this response
+    } else {
+      throw new ErrorHandler(500, `This paragraph cannot be deleted`);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   getAllParagraphs,
   getOneParagraph,
@@ -138,4 +163,5 @@ export default {
   validateParagraph,
   updateParagraph,
   paragraphExists,
+  deleteParagraph,
 };
