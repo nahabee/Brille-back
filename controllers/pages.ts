@@ -2,6 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { formatSortString } from '../helpers/functions';
 import IPage from '../interfaces/IPage';
 import * as Page from '../models/page';
+import * as Paragraph from '../models/paragraph';
 import { ErrorHandler } from '../helpers/errors';
 import Joi from 'joi';
 
@@ -49,6 +50,21 @@ const getOnePage = (async (req: Request, res: Response, next: NextFunction) => {
     const { idPage } = req.params;
     const page = await Page.getPageById(Number(idPage));
     page ? res.status(200).json(page) : res.sendStatus(404);
+  } catch (err) {
+    next(err);
+  }
+}) as RequestHandler;
+
+// >> --- GET PARAGRAPH : by PAGE ---
+const getParagraphsByPage = (async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { idPage } = req.params;
+    const paragraphs = await Paragraph.getParagraphsByPage(Number(idPage));
+    res.status(200).json(paragraphs);
   } catch (err) {
     next(err);
   }
@@ -117,4 +133,5 @@ export default {
   validatePage,
   updatePage,
   pageExists,
+  getParagraphsByPage,
 };

@@ -258,6 +258,13 @@ const setupRoutes = (server: Express) => {
   server.get('/api/pages', pagesController.getAllPages);
   // GET BY ID
   server.get('/api/pages/:idPage', pagesController.getOnePage);
+
+  //GET PARAGRAPH FOR A SPECIFIC PAGE
+  server.get(
+    '/api/pages/:idPage/paragraphs',
+    pagesController.getParagraphsByPage
+  );
+
   // POST PAGE
   server.post(
     '/api/pages',
