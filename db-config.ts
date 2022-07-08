@@ -9,7 +9,7 @@ const [user, password, host, database] = databaseUrl.split(
   /[:@/?)<>{}[\]\r\n/\\]+/
 );
 
-// object pool creation
+// créer l'objet pool
 const pool: Pool = mysql.createPool({
   host: host,
   user: user,
