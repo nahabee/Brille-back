@@ -24,9 +24,7 @@ const getPageById = async (idPage: number): Promise<IPage> => {
 const addPage = async (page: IPage): Promise<number> => {
   const results = await connection
     .promise()
-    .query<ResultSetHeader>('INSERT INTO pages (name) VALUES (?)', [
-      page.name,
-    ]);
+    .query<ResultSetHeader>('INSERT INTO pages (name) VALUES (?)', [page.name]);
   return results[0].insertId;
 };
 
