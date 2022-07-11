@@ -19,25 +19,25 @@ const getParagraphById = async (idParagraph: number): Promise<IParagraph> => {
     .query<IParagraph[]>('SELECT * FROM paragraphs WHERE id = ?', [
       idParagraph,
     ]);
-    return results[0];
+  return results[0];
 };
-  
-  // >> --- GET ALL PARAGRAPHS FROM A SPECIFIC PAGE ---
-  
-  const getParagraphsByPage = async (idPage: number): Promise<IParagraph[]> => {
-    const results = await connection
-      .promise()
-      .query<IParagraph[]>('SELECT * FROM paragraphs WHERE idPage = ?', [idPage]);
-    return results[0];
-  };
+
+// >> --- GET ALL PARAGRAPHS FROM A SPECIFIC PAGE ---
+
+const getParagraphsByPage = async (idPage: number): Promise<IParagraph[]> => {
+  const results = await connection
+    .promise()
+    .query<IParagraph[]>('SELECT * FROM paragraphs WHERE idPage = ?', [idPage]);
+  return results[0];
+};
 
 // >> --- POST A NEW PARAGRAPH ---
 const addParagraph = async (paragraph: IParagraph): Promise<number> => {
   const results = await connection
     .promise()
     .query<ResultSetHeader>(
-      'INSERT INTO paragraphs (idPage, title, description) VALUES (?, ?, ?)',
-      [paragraph.idPage, paragraph.title, paragraph.description]
+      'INSERT INTO paragraphs (idPage, idImage, title, description) VALUES (?, ?, ?, ?)',
+      [paragraph.idPage, paragraph.idImage, paragraph.title, paragraph.description]
     );
   return results[0].insertId;
 };
@@ -54,6 +54,11 @@ const updateParagraph = async (
   if (paragraph.idPage) {
     sql += oneValue ? ', idPage = ? ' : ' idPage = ? ';
     sqlValues.push(paragraph.idPage);
+    oneValue = true;
+  }
+  if (paragraph.idImage) {
+    sql += oneValue ? ', idImage = ? ' : ' idImage = ? ';
+    sqlValues.push(paragraph.idImage);
     oneValue = true;
   }
   if (paragraph.title) {
@@ -84,7 +89,6 @@ const deleteParagraph = async (idParagraph: number): Promise<boolean> => {
     ]);
   return results[0].affectedRows === 1;
 };
-
 
 export {
   getAllParagraphs,
