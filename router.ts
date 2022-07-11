@@ -123,7 +123,7 @@ const setupRoutes = (server: Express) => {
     productsController.deleteProduct
   );
 
-  // >> --- IMAGES ---
+  // >> --- GET ALL IMAGES ---
   // ? GET all the images
   server.get('/api/images', imagesController.getAllImages);
 
@@ -152,7 +152,7 @@ const setupRoutes = (server: Express) => {
     imagesController.deleteImage
   );
 
-  // >> --- PARAGRAPHS ---
+  // >> --- GET ALL PARAGRAPHS ---
   // ? GET all the paragraphs
   server.get('/api/paragraphs', paragraphsController.getAllParagraphs);
 
