@@ -265,6 +265,8 @@ const setupRoutes = (server: Express) => {
     pagesController.getParagraphsByPage
   );
 
+  //GET IMAGE FOR A SPECIFIC PAGE
+  server.get('/api/pages/:idPage/images', pagesController.getImagesByPage);
   // POST PAGE
   server.post(
     '/api/pages',
