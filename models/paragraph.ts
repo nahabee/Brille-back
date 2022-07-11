@@ -19,8 +19,17 @@ const getParagraphById = async (idParagraph: number): Promise<IParagraph> => {
     .query<IParagraph[]>('SELECT * FROM paragraphs WHERE id = ?', [
       idParagraph,
     ]);
-  return results[0];
+    return results[0];
 };
+  
+  // >> --- GET ALL PARAGRAPHS FROM A SPECIFIC PAGE ---
+  
+  const getParagraphsByPage = async (idPage: number): Promise<IParagraph[]> => {
+    const results = await connection
+      .promise()
+      .query<IParagraph[]>('SELECT * FROM paragraphs WHERE idPage = ?', [idPage]);
+    return results[0];
+  };
 
 // >> --- POST A NEW PARAGRAPH ---
 const addParagraph = async (paragraph: IParagraph): Promise<number> => {
@@ -76,14 +85,6 @@ const deleteParagraph = async (idParagraph: number): Promise<boolean> => {
   return results[0].affectedRows === 1;
 };
 
-// >> --- GET ALL PARAGRAPHS FROM A SPECIFIC PAGE ---
-
-const getParagraphsByPage = async (idPage: number): Promise<IParagraph> => {
-  const [results] = await connection
-    .promise()
-    .query<IParagraph[]>('SELECT * FROM paragraphs WHERE idPage = ?', [idPage]);
-  return results[0];
-};
 
 export {
   getAllParagraphs,
