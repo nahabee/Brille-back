@@ -3,6 +3,7 @@ import { formatSortString } from '../helpers/functions';
 import IPage from '../interfaces/IPage';
 import * as Page from '../models/page';
 import * as Paragraph from '../models/paragraph';
+import * as Image from '../models/image';
 import { ErrorHandler } from '../helpers/errors';
 import Joi from 'joi';
 
@@ -65,6 +66,21 @@ const getParagraphsByPage = (async (
     const { idPage } = req.params;
     const paragraphs = await Paragraph.getParagraphsByPage(Number(idPage));
     res.status(200).json(paragraphs);
+  } catch (err) {
+    next(err);
+  }
+}) as RequestHandler;
+
+// >> --- GET IMAGES : by PAGE ---
+const getImagesByPage = (async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { idPage } = req.params;
+    const images = await Image.getImagesByPage(Number(idPage));
+    res.status(200).json(images);
   } catch (err) {
     next(err);
   }
@@ -134,4 +150,5 @@ export default {
   updatePage,
   pageExists,
   getParagraphsByPage,
+  getImagesByPage,
 };
