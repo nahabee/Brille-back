@@ -20,12 +20,13 @@ const setupRoutes = (server: Express) => {
   // post users, checking if email is free then adding user
   server.post(
     '/api/users',
-    authController.getCurrentSession,
+    // authController.getCurrentSession,
     // authController.checkSessionPrivileges,
     usersController.validateUser,
     usersController.emailIsFree,
     usersController.addUser
   );
+
   // put users, checking if user exists and updates it
   server.put(
     '/api/users/:idUser',
@@ -171,7 +172,7 @@ const setupRoutes = (server: Express) => {
 
   // ? MODIFY a paragraph
   server.put(
-    '/api/paragraphs/:idImage',
+    '/api/paragraphs/:idParagraph',
     paragraphsController.validateParagraph,
     paragraphsController.paragraphExists,
     paragraphsController.updateParagraph

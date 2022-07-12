@@ -8,9 +8,12 @@ import cors from 'cors';
 const app = express();
 const port = process.env.PORT || 3000;
 
+// à faire des requetes axios
 const corsOptions: cors.CorsOptions = {
-  origin: ['http://localhost:3001', 'http://localhost:3000'],
+  // for cookies
   credentials: true,
+  // must-have for frontend to communicate with API
+  origin: ['https://brille-handbags.vercel.app', 'http://localhost:3000'],
 };
 
 // middleware cors
@@ -20,7 +23,7 @@ app.use(cors(corsOptions));
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Expose-Headers', 'Content-Range');
-  next();
+  next(); 
 });
 
 //middleware pour lire le body

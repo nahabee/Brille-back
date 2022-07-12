@@ -71,9 +71,21 @@ const addUser = async (user: IUser): Promise<number> => {
   const results = await connection
     .promise()
     .query<ResultSetHeader>(
-      'INSERT INTO users (firstname, lastname, email, password, admin,created, phone, modified,) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [user.firstname, user.lastname, user.email, hashedPassword, user.admin, user.created, user.phone, user.modified,]
+      'INSERT INTO users (firstname, lastname, email, password, admin, created, phone, modified) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        user.firstname,
+        user.lastname,
+        user.email,
+        hashedPassword,
+        user.admin,
+        user.created,
+        user.phone,
+        user.modified,
+      ]
     );
+
+  console.log(hashedPassword);
+
   return results[0].insertId;
 };
 
