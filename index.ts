@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import cookieParser from 'cookie-parser';
 import { handleError } from './helpers/errors';
 import setupRoutes from './router';
@@ -13,18 +13,22 @@ const corsOptions: cors.CorsOptions = {
   // for cookies
   credentials: true,
   // must-have for frontend to communicate with API
-  origin: ['https://brille-handbags.vercel.app', 'http://localhost:3000'],
+  origin: [
+    'https://brille-handbags.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:3001',
+  ],
 };
 
 // middleware cors
 app.use(cors(corsOptions));
 
 //middleware perso pour ajouter les headers nécessaires à react-admin
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Access-Control-Expose-Headers', 'Content-Range');
-  next(); 
-});
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   res.setHeader('Content-Type', 'application/json');
+//   res.setHeader('Access-Control-Expose-Headers', 'Content-Range');
+//   next();
+// });
 
 //middleware pour lire le body
 app.use(express.json());
