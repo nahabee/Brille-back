@@ -21,7 +21,7 @@ const setupRoutes = (server: Express) => {
   server.post(
     '/api/users',
     authController.getCurrentSession,
-    authController.checkSessionPrivileges,
+    // authController.checkSessionPrivileges,
     usersController.validateUser,
     usersController.emailIsFree,
     usersController.addUser
