@@ -20,6 +20,16 @@ const getImageById = async (idImage: number): Promise<IImage> => {
   return results[0];
 };
 
+// >> --- GET ALL IMAGES FROM A SPECIFIC PAGE ---
+
+const getImagesByPage = async (idPage: number): Promise<IImage[]> => {
+  const results = await connection
+    .promise()
+    .query<IImage[]>('SELECT * FROM images WHERE idPage = ?', [idPage]);
+
+  return results[0];
+};
+
 // >> --- POST A NEW IMAGE ---
 const addImage = async (image: IImage): Promise<number> => {
   const results = await connection
@@ -67,4 +77,11 @@ const deleteImage = async (idImage: number): Promise<boolean> => {
   return results[0].affectedRows === 1;
 };
 
-export { getAllImages, getImageById, addImage, updateImage, deleteImage };
+export {
+  getAllImages,
+  getImageById,
+  addImage,
+  updateImage,
+  deleteImage,
+  getImagesByPage,
+};
