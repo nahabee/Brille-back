@@ -37,7 +37,12 @@ const addParagraph = async (paragraph: IParagraph): Promise<number> => {
     .promise()
     .query<ResultSetHeader>(
       'INSERT INTO paragraphs (idPage, idImage, title, description) VALUES (?, ?, ?, ?)',
-      [paragraph.idPage, paragraph.idImage, paragraph.title, paragraph.description]
+      [
+        paragraph.idPage,
+        paragraph.idImage,
+        paragraph.title,
+        paragraph.description,
+      ]
     );
   return results[0].insertId;
 };
