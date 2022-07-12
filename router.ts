@@ -259,7 +259,7 @@ const setupRoutes = (server: Express) => {
   // GET BY ID
   server.get('/api/pages/:idPage', pagesController.getOnePage);
 
-  //GET PARAGRAPH FOR A SPECIFIC PAGE
+  //GET PARAGRAPH FOR A SPECIFIC PAGE!
   server.get(
     '/api/pages/:idPage/paragraphs',
     pagesController.getParagraphsByPage
