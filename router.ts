@@ -201,7 +201,17 @@ const setupRoutes = (server: Express) => {
   //GET BY ID
   server.get('/api/orders/:idOrder', ordersController.getOrderById);
   //route POST
+  server.post('/api/orders', ordersController.validateOrder);
   server.post('/api/orders', ordersController.addOrder);
+
+  // MODIFY AN ORDER
+  server.put('/api/orders/:idOrder', ordersController.validateOrder);
+  server.put('/api/orders/:idOrder', ordersController.orderExists);
+  server.put('/api/orders/:idOrder', ordersController.updateOrder);
+
+  // DELETE AN ORDER
+  server.delete('api/orders/:idOrder', ordersController.orderExists);
+  server.delete('api/orders/:idOrder', ordersController.deleteOrder);
 
   // NEWSLETTERS
   //route GET ALL
