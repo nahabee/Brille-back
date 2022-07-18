@@ -270,6 +270,13 @@ const setupRoutes = (server: Express) => {
     pagesController.pageExists,
     pagesController.deletePage
   );
+  // MODIFY A PAGE
+  server.put(
+    '/api/pages/:idPage',
+    pagesController.validatePage,
+    pagesController.pageExists,
+    pagesController.updatePage
+  );
 
   //GET IMAGE FOR A SPECIFIC PAGE
   server.get('/api/pages/:idPage/images', pagesController.getImagesByPage);
