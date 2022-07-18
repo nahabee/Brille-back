@@ -55,7 +55,7 @@ const updateOrder = async (
   }
   if (order.idAdress) {
     sql += oneValue ? ', idAddress = ? ' : ' idAddress = ? ';
-    sqlValues.push(order.idAdress);
+    sqlValues.push(order.idAddress);
     oneValue = true;
   }
   if (order.orderDate) {
