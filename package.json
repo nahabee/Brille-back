@@ -73,10 +73,10 @@
   "description": "Voici un exemple de template pour le projet 3. Il est configuré pour fonctionner avec Sazss, Typescript, ESlint et Prettier.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexis92140/Brille-back.git"
+    "url": "git+https://github.com/JacquesPoulin/Brille-back.git"
   },
   "bugs": {
-    "url": "https://github.com/alexis92140/Brille-back/issues"
+    "url": "https://github.com/JacquesPoulin/Brille-back/issues"
   },
-  "homepage": "https://github.com/alexis92140/Brille-back#readme"
+  "homepage": "https://github.com/JacquesPoulin/Brille-back#readme"
 }

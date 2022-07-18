@@ -1,3 +1,4 @@
+import connection from '../db-config';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { formatSortString } from '../helpers/functions';
 import IImage from '../interfaces/IImage';
@@ -58,7 +59,15 @@ const getOneImage = (async (
     next(err);
   }
 }) as RequestHandler;
+// >> --- GET ALL IMAGES FROM A SPECIFIC PAGE ---
 
+const getImagesByPage = async (idPage: number): Promise<IImage[]> => {
+  const results = await connection
+    .promise()
+    .query<IImage[]>('SELECT * FROM images WHERE idPage = ?', [idPage]);
+
+  return results[0];
+};
 // >> --- POST A NEW IMAGE ---
 const addImage = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -145,4 +154,5 @@ export default {
   updateImage,
   imageExists,
   deleteImage,
+  getImagesByPage,
 };
