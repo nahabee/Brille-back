@@ -259,11 +259,16 @@ const setupRoutes = (server: Express) => {
   server.get('/api/pages', pagesController.getAllPages);
   // GET BY ID
   server.get('/api/pages/:idPage', pagesController.getOnePage);
-
   //GET PARAGRAPH FOR A SPECIFIC PAGE!
   server.get(
     '/api/pages/:idPage/paragraphs',
     pagesController.getParagraphsByPage
+  );
+  // ? DELETE a page
+  server.delete(
+    '/api/pages/:idPage',
+    pagesController.pageExists,
+    pagesController.deletePage
   );
 
   //GET IMAGE FOR A SPECIFIC PAGE
