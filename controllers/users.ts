@@ -19,10 +19,10 @@ const validateUser = (req: Request, res: Response, next: NextFunction) => {
     lastname: Joi.string().max(100).presence(required),
     email: Joi.string().email().max(255).presence(required),
     password: Joi.string().min(8).max(15).presence(required),
-    admin: Joi.number().min(0).max(1).optional(),
-    created: Joi.string().max(100).optional(),
-    modified: Joi.string().max(100).optional(),
-    phone: Joi.string().min(8).max(15).optional(),
+    admin: Joi.number().min(0).max(1).allow(null).optional(),
+    created: Joi.string().max(100).allow(null).optional(),
+    modified: Joi.string().max(100).allow(null).optional(),
+    phone: Joi.string().min(8).max(15).allow(null).optional(),
     id: Joi.number().optional(), // pour react-admin
   }).validate(req.body, { abortEarly: false }).error;
   if (errors) {

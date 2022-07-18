@@ -142,6 +142,24 @@ const updatePage = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// >> --- DELETE A PAGE (by ID) ---
+const deletePage = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Récupèrer l'id de la page avec req.params
+    const { idPage } = req.params;
+    // Vérifie if page exist
+    const page = await Page.getPageById(Number(idPage));
+    const pageDeleted = await Page.deletePage(Number(idPage));
+    if (pageDeleted) {
+      res.status(200).send(page); // react-admin needs this response
+    } else {
+      throw new ErrorHandler(500, `This page cannot be deleted`);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   getAllPages,
   getOnePage,
@@ -151,4 +169,5 @@ export default {
   pageExists,
   getParagraphsByPage,
   getImagesByPage,
+  deletePage,
 };
