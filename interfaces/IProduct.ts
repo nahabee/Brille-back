@@ -8,6 +8,4 @@ export default interface IProduct extends RowDataPacket {
   productPrice : number;
   productDesc : string;
   productStock : number;
-  
-  
 }
