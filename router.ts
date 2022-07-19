@@ -204,6 +204,12 @@ const setupRoutes = (server: Express) => {
   server.post('/api/status', statusController.addStatus);
   // PUT status
   server.put('/api/status/:idStatus', statusController.updateStatus);
+  // ? DELETE a status
+  server.delete(
+    '/api/status/:idStatus',
+    statusController.statusExists,
+    statusController.deleteStatus
+  );
 
   // => ROUTES GET POUR ORDERS <= //
   //GET ALL
