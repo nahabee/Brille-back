@@ -11,7 +11,7 @@ const validateOrder = (req: Request, res: Response, next: NextFunction) => {
     required = 'required';
   }
   const errors = Joi.object({
-    orderDate: Joi.date().optional(),
+    orderDate: Joi.date().presence(required),
     orderTrackingNum: Joi.number().optional(),
     idAddress: Joi.number().optional().allow(null),
     idStatus: Joi.number().optional().allow(null),
