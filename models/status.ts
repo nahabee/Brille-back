@@ -48,4 +48,12 @@ const updateStatus = async (
   return results[0].affectedRows === 1;
 };
 
-export { getAllStatus, getStatusById, addStatus, updateStatus };
+// >> --- DELETE A STATUS ---
+const deleteStatus = async (idStatus: number): Promise<boolean> => {
+  const results = await connection
+    .promise()
+    .query<ResultSetHeader>('DELETE FROM status WHERE id = ?', [idStatus]);
+  return results[0].affectedRows === 1;
+};
+
+export { getAllStatus, getStatusById, addStatus, updateStatus, deleteStatus };

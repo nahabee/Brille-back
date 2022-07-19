@@ -48,6 +48,29 @@ const addStatus = async (req: Request, res: Response, next: NextFunction) => {
     next(err);
   }
 };
+const statusExists = (async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // Récupèrer l'id status de req.params
+  const { idStatus } = req.params;
+  // Vérifier si un paragraphe existe
+  try {
+    const statusExists = await Status.getStatusById(Number(idStatus));
+    // Si pas de paragraphe => erreur
+    if (!statusExists) {
+      next(new ErrorHandler(404, `This status does not exist`));
+    }
+    // Si oui => next()
+    else {
+      // req.record = paragraph.Exists; // because we need deleted record to be sent after a delete in react-admin
+      next();
+    }
+  } catch (err) {
+    next(err);
+  }
+}) as RequestHandler;
 
 // updates a status
 const updateStatus = async (
@@ -71,10 +94,30 @@ const updateStatus = async (
     next(err);
   }
 };
-
+// >> --- DELETE A STATUS (by ID) ---
+const deleteStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { idStatus } = req.params;
+    const status = await Status.getStatusById(Number(idStatus));
+    const statusDeleted = await Status.deleteStatus(Number(idStatus));
+    if (statusDeleted) {
+      res.status(200).send(status); // react-admin needs this response
+    } else {
+      throw new ErrorHandler(500, `This status cannot be deleted`);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 export default {
   getAllStatus,
   getOneStatus,
   addStatus,
   updateStatus,
+  deleteStatus,
+  statusExists,
 };

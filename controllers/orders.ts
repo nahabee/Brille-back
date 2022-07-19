@@ -1,22 +1,21 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { formatSortString } from '../helpers/functions';
-import * as Order from '../models/order';
 import IOrder from '../interfaces/IOrder';
+import * as Order from '../models/order';
 import { ErrorHandler } from '../helpers/errors';
 import Joi from 'joi';
 
-// validates input
 const validateOrder = (req: Request, res: Response, next: NextFunction) => {
   let required: Joi.PresenceMode = 'optional';
   if (req.method === 'POST') {
     required = 'required';
   }
   const errors = Joi.object({
-    idUser: Joi.number().allow(null).presence(required),
-    idStatus: Joi.number().allow(null).presence(required),
-    idAdress: Joi.number().optional(),
     orderDate: Joi.date().optional(),
-    orderTrackingNum: Joi.number().allow(null).presence(required),
+    orderTrackingNum: Joi.number().optional(),
+    idAddress: Joi.number().optional().allow(null),
+    idStatus: Joi.number().optional().allow(null),
+    idUser: Joi.number().optional().allow(null),
     id: Joi.number().optional(), // pour react-admin
   }).validate(req.body, { abortEarly: false }).error;
   if (errors) {
@@ -27,7 +26,6 @@ const validateOrder = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// route get all orders
 const getAllOrders = (async (
   req: Request,
   res: Response,
@@ -47,8 +45,7 @@ const getAllOrders = (async (
   }
 }) as RequestHandler; // Used to avoid eslint error
 
-// route get by Id
-const getOrderById = (async (
+const getOneOrder = (async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -62,7 +59,6 @@ const getOrderById = (async (
   }
 }) as RequestHandler;
 
-// add an order
 const addOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const idOrder = await Order.addOrder(req.body as IOrder);
@@ -81,18 +77,12 @@ const orderExists = (async (
   res: Response,
   next: NextFunction
 ) => {
-  // Récupèrer l'id order de req.params
   const { idOrder } = req.params;
-  // Vérifier si un order existe
   try {
     const orderExists = await Order.getOrderById(Number(idOrder));
-    // Si pas d'order => erreur
     if (!orderExists) {
       next(new ErrorHandler(404, `This order does not exist`));
-    }
-    // Si oui => next()
-    else {
-      // req.record = order.Exists; // because we need deleted record to be sent after a delete in react-admin
+    } else {
       next();
     }
   } catch (err) {
@@ -100,15 +90,14 @@ const orderExists = (async (
   }
 }) as RequestHandler;
 
-// ! 2nd step : update the order darling
 const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { idOrder } = req.params;
-    const OrderUpdated = await Order.updateOrder(
+    const orderUpdated = await Order.updateOrder(
       Number(idOrder),
       req.body as IOrder
     );
-    if (OrderUpdated) {
+    if (orderUpdated) {
       const order = await Order.getOrderById(Number(idOrder));
       res.status(200).send(order); // react-admin needs this response
     } else {
@@ -118,13 +107,9 @@ const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
     next(err);
   }
 };
-
-// >> --- DELETE AN ORDER (by ID) ---
 const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Récupèrer l'id de l'Order avec req.params
     const { idOrder } = req.params;
-    // Vérifie if this order exists
     const order = await Order.getOrderById(Number(idOrder));
     const orderDeleted = await Order.deleteOrder(Number(idOrder));
     if (orderDeleted) {
@@ -139,10 +124,10 @@ const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
 
 export default {
   getAllOrders,
-  getOrderById,
+  getOneOrder,
   addOrder,
   validateOrder,
-  orderExists,
   updateOrder,
+  orderExists,
   deleteOrder,
 };

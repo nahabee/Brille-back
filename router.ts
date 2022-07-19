@@ -8,6 +8,7 @@ import pagesController from './controllers/pages';
 import imagesController from './controllers/images';
 import newslettersController from './controllers/newsletters';
 import paragraphsController from './controllers/paragraphs';
+import productOrdersController from './controllers/productOrders';
 import authController from './controllers/auth';
 import { Express } from 'express';
 
@@ -153,6 +154,15 @@ const setupRoutes = (server: Express) => {
     imagesController.deleteImage
   );
 
+  // >> --- GET ALL PRODUCT ORDERS ---
+  // ? GET all the product orders
+  server.get('/api/productorders', productOrdersController.getAllProductOrders);
+  // ? GET a product order by id
+  server.get(
+    '/api/productorders/:idProductOrders',
+    productOrdersController.getOneProductOrder
+  );
+
   // >> --- GET ALL PARAGRAPHS ---
   // ? GET all the paragraphs
   server.get('/api/paragraphs', paragraphsController.getAllParagraphs);
@@ -194,33 +204,36 @@ const setupRoutes = (server: Express) => {
   server.post('/api/status', statusController.addStatus);
   // PUT status
   server.put('/api/status/:idStatus', statusController.updateStatus);
-
+  // ? DELETE a status
+  server.delete(
+    '/api/status/:idStatus',
+    statusController.statusExists,
+    statusController.deleteStatus
+  );
 
   // => ROUTES POUR ORDERS <= //
   //GET ALL
   server.get('/api/orders', ordersController.getAllOrders);
   //GET BY ID
-  server.get('/api/orders/:idOrder', ordersController.getOrderById);
+  server.get('/api/orders/:idOrder', ordersController.getOneOrder);
   //route POST
   server.post(
-    '/api/orders/', 
+    '/api/orders/',
     ordersController.validateOrder,
     ordersController.addOrder
-    );
-
+  );
   // MODIFY AN ORDER
   server.put(
-    '/api/orders/:idOrder', 
+    '/api/orders/:idOrder',
     ordersController.validateOrder,
-  ordersController.orderExists,
-  ordersController.updateOrder
+    ordersController.orderExists,
+    ordersController.updateOrder
   );
-
   // DELETE AN ORDER
   server.delete(
-    'api/orders/:idOrder', 
+    '/api/orders/:idOrder',
     ordersController.orderExists,
-  ordersController.deleteOrder
+    ordersController.deleteOrder
   );
 
   // NEWSLETTERS
@@ -251,7 +264,7 @@ const setupRoutes = (server: Express) => {
   //route delete
 
   server.delete(
-    '/api/newsletters/:idNewsletters',
+    '/api/newsletters/:idNewsletter',
     newslettersController.newsletterExists,
     newslettersController.deleteNewsletter
   );
