@@ -85,6 +85,8 @@ const addUser = async (user: IUser): Promise<number> => {
     );
 
   console.log(hashedPassword);
+  console.log(results);
+  console.log(results[0]);
 
   return results[0].insertId;
 };
