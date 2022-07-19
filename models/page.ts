@@ -48,4 +48,12 @@ const updatePage = async (idPage: number, page: IPage): Promise<boolean> => {
   return results[0].affectedRows === 1;
 };
 
-export { getAllPages, getPageById, addPage, updatePage };
+// >> --- DELETE A PAGE ---
+const deletePage = async (idPage: number): Promise<boolean> => {
+  const results = await connection
+    .promise()
+    .query<ResultSetHeader>('DELETE FROM pages WHERE id = ?', [idPage]);
+  return results[0].affectedRows === 1;
+};
+
+export { getAllPages, getPageById, addPage, updatePage, deletePage };

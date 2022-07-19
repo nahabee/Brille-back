@@ -7,6 +7,4 @@ export default interface IOrder extends RowDataPacket {
   idAddress: number;
   orderDate: Date;
   orderTrackingNum: number;
-  orderStatus: string;
-  
 }
