@@ -14,35 +14,32 @@ const getAllOrders = async (sortBy = ''): Promise<IOrder[]> => {
 const getOrderById = async (idOrder: number): Promise<IOrder> => {
   const [results] = await connection
     .promise()
-    .query<IOrder[]>(`SELECT * FROM orders WHERE id = ?`, [idOrder]);
+    .query<IOrder[]>('SELECT * FROM orders WHERE id = ?', [idOrder]);
   return results[0];
 };
 
-//route post
 const addOrder = async (order: IOrder): Promise<number> => {
   const results = await connection
-  .promise()
-  .query<ResultSetHeader>(
-    `INSERT INTO orders (idUser,idStatus,idAddress,orderDate,orderTrackingNum) 
-      VALUES (?, ?, ?, NOW(), ?)`,
-    [
-      order.idUser,
-      order.idStatus,
-      order.idAddress,
-      order.orderDate,
-      order.orderTrackingNum
-    ]
-  );
+    .promise()
+    .query<ResultSetHeader>(
+      'INSERT INTO orders (idUser, idStatus, idAddress, orderDate, orderTrackingNum) VALUES (?, ?, ?, ?, ?)',
+      [
+        order.idUser,
+        order.idStatus,
+        order.idAddress,
+        order.orderDate,
+        order.orderTrackingNum,
+      ]
+    );
   return results[0].insertId;
 };
 
-// >> --- UPDATE AN ORDER  ---
 const updateOrder = async (
   idOrder: number,
   order: IOrder
 ): Promise<boolean> => {
-  let sql = `UPDATE orders SET`;
-  const sqlValues: Array<Date | string | number | boolean> = [];
+  let sql = 'UPDATE orders SET ';
+  const sqlValues: Array<string | number | boolean> = [];
   let oneValue = false;
 
   if (order.idUser) {
@@ -55,7 +52,7 @@ const updateOrder = async (
     sqlValues.push(order.idStatus);
     oneValue = true;
   }
-  if (order.idAdress) {
+  if (order.idAddress) {
     sql += oneValue ? ', idAddress = ? ' : ' idAddress = ? ';
     sqlValues.push(order.idAddress);
     oneValue = true;
@@ -79,7 +76,6 @@ const updateOrder = async (
   return results[0].affectedRows === 1;
 };
 
-// >> --- DELETE AN ORDER  ---
 const deleteOrder = async (idOrder: number): Promise<boolean> => {
   const results = await connection
     .promise()
