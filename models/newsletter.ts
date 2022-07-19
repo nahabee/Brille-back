@@ -60,7 +60,9 @@ const deleteNewsletter = async (idNewsletter: number): Promise<boolean> => {
   const results = await connection
     .promise()
     .query<ResultSetHeader>('DELETE FROM newsletters WHERE id = ?', [idNewsletter]);
+    
   return results[0].affectedRows === 1;
+
 };
 
 
