@@ -8,6 +8,7 @@ import pagesController from './controllers/pages';
 import imagesController from './controllers/images';
 import newslettersController from './controllers/newsletters';
 import paragraphsController from './controllers/paragraphs';
+import productOrdersController from './controllers/productOrders';
 import authController from './controllers/auth';
 import { Express } from 'express';
 
@@ -151,6 +152,15 @@ const setupRoutes = (server: Express) => {
     '/api/images/:idImage',
     imagesController.imageExists,
     imagesController.deleteImage
+  );
+
+  // >> --- GET ALL PRODUCT ORDERS ---
+  // ? GET all the product orders
+  server.get('/api/productorders', productOrdersController.getAllProductOrders);
+  // ? GET a product order by id
+  server.get(
+    '/api/productorders/:idProductOrders',
+    productOrdersController.getOneProductOrder
   );
 
   // >> --- GET ALL PARAGRAPHS ---
