@@ -22,7 +22,7 @@ const validateUser = (req: Request, res: Response, next: NextFunction) => {
     admin: Joi.number().min(0).max(1).allow(null).optional(),
     created: Joi.string().max(100).allow(null).optional(),
     modified: Joi.string().max(100).allow(null).optional(),
-    phone: Joi.string().min(8).max(15).allow(null).optional(),
+    phone: Joi.number().max(10).allow(null).optional(),
     id: Joi.number().optional(), // pour react-admin
   }).validate(req.body, { abortEarly: false }).error;
   if (errors) {

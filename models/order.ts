@@ -20,7 +20,9 @@ const getOrderById = async (idOrder: number): Promise<IOrder> => {
 
 //route post
 const addOrder = async (order: IOrder): Promise<number> => {
-  const results = await connection.promise().query<ResultSetHeader>(
+  const results = await connection
+  .promise()
+  .query<ResultSetHeader>(
     `INSERT INTO orders (idUser,idStatus,idAddress,orderDate,orderTrackingNum) 
       VALUES (?, ?, ?, NOW(), ?)`,
     [
@@ -28,7 +30,7 @@ const addOrder = async (order: IOrder): Promise<number> => {
       order.idStatus,
       order.idAddress,
       order.orderDate,
-      order.orderTrackingNum,
+      order.orderTrackingNum
     ]
   );
   return results[0].insertId;

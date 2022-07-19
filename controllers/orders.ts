@@ -14,8 +14,8 @@ const validateOrder = (req: Request, res: Response, next: NextFunction) => {
   const errors = Joi.object({
     idUser: Joi.number().allow(null).presence(required),
     idStatus: Joi.number().allow(null).presence(required),
-    idAdress: Joi.number().allow(null).presence(required),
-    orderDate: Joi.number().allow(null).presence(required),
+    idAdress: Joi.number().optional(),
+    orderDate: Joi.date().optional(),
     orderTrackingNum: Joi.number().allow(null).presence(required),
     id: Joi.number().optional(), // pour react-admin
   }).validate(req.body, { abortEarly: false }).error;
@@ -130,7 +130,7 @@ const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
     if (orderDeleted) {
       res.status(200).send(order); // react-admin needs this response
     } else {
-      throw new ErrorHandler(500, `This paragraph cannot be deleted`);
+      throw new ErrorHandler(500, `This order cannot be deleted`);
     }
   } catch (err) {
     next(err);
