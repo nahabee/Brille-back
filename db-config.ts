@@ -21,5 +21,4 @@ const pool: Pool = mysql.createPool({
   queueLimit: 0,
 });
 
-// exporte l'objet pool pour l'utiliser ailleurs
 export default pool;
