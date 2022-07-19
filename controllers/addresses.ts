@@ -14,10 +14,10 @@ const validateAddress = (req: Request, res: Response, next: NextFunction) => {
   }
   const errors = Joi.object({
     addressLine1: Joi.string().max(255).presence(required),
-    addressLine2: Joi.string().max(255).optional(),
-    city: Joi.string().max(200).presence(required),
-    country: Joi.string().max(200).presence(required),
-    zipCode: Joi.number().max(10).presence(required),
+    addressLine2: Joi.string().max(255).allow(null).optional(),
+    city: Joi.string().max(200).allow(null).optional(),
+    country: Joi.string().max(200).allow(null).optional(),
+    zipCode: Joi.number().allow(null).optional(),
     idUser: Joi.number().presence(required),
     id: Joi.number().optional(), // pour react-admin
   }).validate(req.body, { abortEarly: false }).error;
