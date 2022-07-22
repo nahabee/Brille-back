@@ -59,6 +59,7 @@ const getOneImage = (async (
     next(err);
   }
 }) as RequestHandler;
+
 // >> --- GET ALL IMAGES FROM A SPECIFIC PAGE ---
 
 const getImagesByPage = async (idPage: number): Promise<IImage[]> => {
@@ -68,6 +69,7 @@ const getImagesByPage = async (idPage: number): Promise<IImage[]> => {
 
   return results[0];
 };
+
 // >> --- POST A NEW IMAGE ---
 const addImage = async (req: Request, res: Response, next: NextFunction) => {
   try {
