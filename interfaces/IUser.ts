@@ -8,7 +8,6 @@ export default interface IUser extends RowDataPacket {
   email: string;
   password: string;
   created: Date;
-  phone: number;
+  phone?: number;
   modified: Date;
-  
 }
