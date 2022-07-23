@@ -13,12 +13,13 @@ import authController from './controllers/auth';
 import { Express } from 'express';
 
 const setupRoutes = (server: Express) => {
-  // USERS
-  // get users
+  // >> USERS
+
+  // ? get users
   server.get('/api/users', usersController.getAllUsers);
-  // get user by id
+  // ? get user by id
   server.get('/api/users/:idUser', usersController.getOneUser);
-  // post users, checking if email is free then adding user
+  // ? post users, checking if email is free then adding user
   server.post(
     '/api/users',
     // authController.getCurrentSession,
@@ -28,7 +29,7 @@ const setupRoutes = (server: Express) => {
     usersController.addUser
   );
 
-  // put users, checking if user exists and updates it
+  // ? put users, checking if user exists and updates it
   server.put(
     '/api/users/:idUser',
     authController.getCurrentSession,
@@ -37,32 +38,36 @@ const setupRoutes = (server: Express) => {
     usersController.userExists,
     usersController.updateUser
   );
-  // delete user by id
+
+  // ? delete user by id
   server.delete(
     '/api/users/:idUser',
-    authController.getCurrentSession,
-    authController.checkSessionPrivileges,
+    // authController.getCurrentSession,
+    // authController.checkSessionPrivileges,
     usersController.userExists,
     usersController.deleteUser
   );
 
-  // LOGIN
+  // >> LOGIN
   server.post('/api/login', authController.validateLogin, authController.login);
 
-  // ADDRESSES
-  // get addresses
+  // >> ADDRESSES
+
+  // ? get addresses
   server.get('/api/addresses', addressesController.getAllAddresses);
-  // get address by id
+
+  // ? get address by id
   server.get('/api/addresses/:idAddress', addressesController.getAddressById);
 
-  // get addresses by user
+  // ? get addresses by user
   server.get(
     '/api/users/:idUser/addresses',
     usersController.userExists,
     authController.getCurrentSession,
     usersController.getAddressesByUser
   );
-  // delete addresses by user
+
+  // ? delete addresses by user
   server.delete(
     '/api/users/:idUser/addresses',
     authController.getCurrentSession,
@@ -70,7 +75,8 @@ const setupRoutes = (server: Express) => {
     usersController.userExists,
     usersController.deleteAddressesByUser
   );
-  // delete address by id
+
+  // ? delete address by id
   server.delete(
     '/api/addresses/:idAddress',
     authController.getCurrentSession,
@@ -78,7 +84,8 @@ const setupRoutes = (server: Express) => {
     addressesController.addressExists,
     addressesController.deleteAddress
   );
-  // add an address
+
+  // ? add an address
   server.post(
     '/api/addresses/',
     authController.getCurrentSession,
@@ -86,7 +93,8 @@ const setupRoutes = (server: Express) => {
     addressesController.validateAddress,
     addressesController.addAddress
   );
-  // put address, checks if an address exists and updates it
+
+  // ? put address, checks if an address exists and updates it
   server.put(
     '/api/addresses/:idAddress',
     authController.getCurrentSession,
