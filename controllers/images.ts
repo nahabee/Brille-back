@@ -15,6 +15,7 @@ const validateImage = (req: Request, res: Response, next: NextFunction) => {
   const errors = Joi.object({
     idPage: Joi.number().presence(required),
     image: Joi.string().max(255).presence(required),
+    name: Joi.string().max(255).optional().allow(null),
     id: Joi.number().optional().allow(null), // pour react-admin
   }).validate(req.body, { abortEarly: false }).error;
   if (errors) {
