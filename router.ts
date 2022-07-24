@@ -17,8 +17,10 @@ const setupRoutes = (server: Express) => {
 
   // ? get users
   server.get('/api/users', usersController.getAllUsers);
+
   // ? get user by id
   server.get('/api/users/:idUser', usersController.getOneUser);
+
   // ? post users, checking if email is free then adding user
   server.post(
     '/api/users',
