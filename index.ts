@@ -16,6 +16,7 @@ const corsOptions: cors.CorsOptions = {
   origin: [
     'https://brille-handbags.vercel.app',
     'http://localhost:3000',
+    'http://localhost:3002',
     'http://localhost:3001',
   ],
 };
