@@ -7,7 +7,7 @@ import 'dotenv/config';
 import Joi from 'joi';
 import IUser from '../interfaces/IUser';
 
-// validates login input
+// >> Validates login input
 const validateLogin = (req: Request, res: Response, next: NextFunction) => {
   const errors = Joi.object({
     email: Joi.string().email().max(255).required(),
@@ -20,7 +20,7 @@ const validateLogin = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// logs a user
+// >> logs a user
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body as IUser;
