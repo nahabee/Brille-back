@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 
 //Cors Configuration - Start
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin');
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested, Content-Type, Accept Authorization'
@@ -25,6 +25,8 @@ app.use((req, res, next) => {
 
 // à faire des requetes axios
 const corsOptions: cors.CorsOptions = {
+  // for cookies
+  credentials: true,
   // must-have for frontend to communicate with API
   origin: [
     'https://brille-handbags.vercel.app',
