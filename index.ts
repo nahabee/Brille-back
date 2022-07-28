@@ -25,8 +25,6 @@ app.use((req, res, next) => {
 
 // à faire des requetes axios
 const corsOptions: cors.CorsOptions = {
-  // for cookies
-  credentials: true,
   // must-have for frontend to communicate with API
   origin: [
     'https://brille-handbags.vercel.app',
