@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import mysql, { Pool } from 'mysql2';
 
 // importe la variable d'environnement
@@ -5,9 +6,8 @@ let databaseUrl: string = process.env.CLEARDB_DATABASE_URL || '';
 // retire le type de base de données
 databaseUrl = databaseUrl.substring(8);
 // who doesn't love some good old effective Regex ?
-const [user, password, host, database] = databaseUrl.split(
-  /[:@/?)<>{}[\]\r\n/\\]+/
-);
+const [user, password, host, database] =
+  databaseUrl.split(/[:@/?)<>{}\r\n/\\]+/);
 
 // créer l'objet pool
 const pool: Pool = mysql.createPool({

@@ -51,7 +51,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 const calculateToken = (userEmail = '', idUser = 0, admin = 0) => {
   return jwt.sign(
     { email: userEmail, id: idUser, admin: admin },
-    process.env.PRIVATE_KEY as string
+    `${process.env.PRIVATE_KEY}` as string
   );
 };
 
