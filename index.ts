@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 // à faire des requetes axios
 const corsOptions: cors.CorsOptions = {
   // for cookies
-  credentials: true,
+  credentials: false,
   // must-have for frontend to communicate with API
   origin: [
     'https://brille-handbags.vercel.app',
